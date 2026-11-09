@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>魅影直播-让每一次相遇都有值得停留的精彩</title>
+<meta name="description" content="魅影直播汇聚音乐现场、舞蹈才艺、游戏交流与生活分享，以清晰的频道分类、便捷的视频播放和贴心的观看工具，帮助你发现感兴趣的内容。浏览主题精选、收藏喜爱频道、记录观看灵感，了解直播观看与互动技巧；支持手机、平板及电脑访问，搭配日夜主题切换，让每一段闲暇时光更有趣。">
+<meta name="keywords" content="魅影直播">
+<meta name="robots" content="index,follow">
+<meta name="author" content="魅影直播">
+<meta property="og:type" content="website">
+<meta property="og:title" content="魅影直播-让每一次相遇都有值得停留的精彩">
+<meta property="og:description" content="汇聚音乐现场、舞蹈才艺、游戏交流与生活分享，清晰的频道分类、便捷的视频播放和贴心的观看工具，帮助你发现感兴趣的内容。">
+<meta property="og:locale" content="zh_CN">
+<meta name="theme-color" content="#12101c">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237c5cff'/%3E%3Cpath d='M26 20l18 12-18 12z' fill='%23ffffff'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#0f0d18;
+  --bg-soft:#161326;
+  --surface:#1c1830;
+  --surface-2:#241f3d;
+  --text:#f2efff;
+  --muted:#a49dc4;
+  --border:rgba(255,255,255,.09);
+  --primary:#7c5cff;
+  --primary-soft:rgba(124,92,255,.16);
+  --accent:#ff5c9a;
+  --accent-soft:rgba(255,92,154,.16);
+  --ok:#3ddc97;
+  --shadow:0 18px 48px rgba(0,0,0,.45);
+  --radius:20px;
+}
+html[data-theme="light"]{
+  --bg:#f6f5fb;
+  --bg-soft:#ffffff;
+  --surface:#ffffff;
+  --surface-2:#f0eefb;
+  --text:#1d1a2b;
+  --muted:#6b6588;
+  --border:rgba(29,26,43,.10);
+  --primary:#5b3df5;
+  --primary-soft:rgba(91,61,245,.10);
+  --accent:#e0397a;
+  --accent-soft:rgba(224,57,122,.10);
+  --ok:#12a06a;
+  --shadow:0 16px 40px rgba(41,32,86,.12);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Source Han Sans SC",system-ui,-apple-system,"Segoe UI",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+  transition:background .35s ease,color .35s ease;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background:
+    radial-gradient(760px 420px at 82% -8%,var(--primary-soft),transparent 68%),
+    radial-gradient(620px 380px at 4% 8%,var(--accent-soft),transparent 70%);
+  pointer-events:none;
+}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+img{max-width:100%;display:block}
+.wrap{width:min(1160px,calc(100% - 40px));margin:0 auto}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.site-header{
+  position:sticky;top:0;z-index:60;
+  backdrop-filter:blur(14px);
+  background:linear-gradient(to bottom,rgba(15,13,24,.92),rgba(15,13,24,.62));
+  border-bottom:1px solid var(--border);
+}
+html[data-theme="light"] .site-header{
+  background:linear-gradient(to bottom,rgba(255,255,255,.94),rgba(255,255,255,.72));
+}
+.header-inner{
+  display:flex;align-items:center;gap:20px;
+  height:68px;
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:.5px;white-space:nowrap}
+.brand-mark{
+  width:34px;height:34px;border-radius:11px;flex:0 0 auto;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  display:grid;place-items:center;
+  box-shadow:0 8px 20px rgba(124,92,255,.4);
+}
+.brand-mark span{
+  width:0;height:0;border-left:11px solid #fff;border-top:6.5px solid transparent;border-bottom:6.5px solid transparent;margin-left:3px;
+}
+.brand em{font-style:normal;color:var(--primary)}
+.main-nav{display:flex;gap:4px;margin-left:auto}
+.main-nav a{
+  padding:8px 14px;border-radius:999px;font-size:14.5px;color:var(--muted);
+  transition:background .22s ease,color .22s ease;
+}
+.main-nav a:hover,.main-nav a:focus-visible{background:var(--primary-soft);color:var(--text)}
+.header-actions{display:flex;align-items:center;gap:10px}
+.theme-toggle{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid var(--border);background:var(--surface);
+  color:var(--text);font:inherit;font-size:13.5px;
+  padding:8px 14px;border-radius:999px;cursor:pointer;
+  transition:border-color .22s ease,transform .22s ease,background .22s ease;
+}
+.theme-toggle:hover{border-color:var(--primary);transform:translateY(-1px)}
+.theme-toggle i{font-style:normal;font-size:15px}
+.nav-toggle{display:none}
+
+.hero{padding:72px 0 56px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:center}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:13px;letter-spacing:2px;color:var(--primary);
+  background:var(--primary-soft);border:1px solid rgba(124,92,255,.28);
+  padding:6px 14px;border-radius:999px;margin-bottom:22px;
+}
+.hero h1{
+  font-size:clamp(32px,4.4vw,52px);
+  line-height:1.24;font-weight:850;letter-spacing:-.5px;
+}
+.hero h1 strong{
+  background:linear-gradient(100deg,var(--primary),var(--accent));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero .lead{
+  margin-top:20px;color:var(--muted);font-size:16.5px;max-width:44em;
+}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:13px 26px;border-radius:999px;font-size:15px;font-weight:600;
+  border:1px solid transparent;cursor:pointer;font-family:inherit;
+  transition:transform .22s ease,box-shadow .22s ease,background .22s ease,border-color .22s ease;
+}
+.btn-primary{
+  color:#fff;background:linear-gradient(120deg,var(--primary),var(--accent));
+  box-shadow:0 12px 28px rgba(124,92,255,.36);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(124,92,255,.46)}
+.btn-ghost{background:var(--surface);border-color:var(--border);color:var(--text)}
+.btn-ghost:hover{transform:translateY(-2px);border-color:var(--primary)}
+.hero-stats{display:flex;flex-wrap:wrap;gap:34px;margin-top:38px;padding-top:28px;border-top:1px solid var(--border)}
+.hero-stats div{min-width:96px}
+.hero-stats b{display:block;font-size:25px;font-weight:800;letter-spacing:-.4px}
+.hero-stats span{font-size:13px;color:var(--muted)}
+
+.player-card{
+  background:linear-gradient(165deg,var(--surface),var(--surface-2));
+  border:1px solid var(--border);border-radius:24px;
+  box-shadow:var(--shadow);padding:16px;position:relative;
+}
+.player-screen{
+  position:relative;border-radius:16px;overflow:hidden;
+  aspect-ratio:16/10;
+  background:
+    radial-gradient(circle at 26% 24%,rgba(124,92,255,.55),transparent 58%),
+    radial-gradient(circle at 78% 76%,rgba(255,92,154,.48),transparent 60%),
+    #120f20;
+  display:grid;place-items:center;
+}
+.player-screen::after{
+  content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(115deg,rgba(255,255,255,.045) 0 2px,transparent 2px 9px);
+}
+.live-badge{
+  position:absolute;top:12px;left:12px;z-index:2;
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(0,0,0,.5);color:#fff;font-size:12px;
+  padding:4px 10px;border-radius:999px;backdrop-filter:blur(6px);
+}
+.live-badge i{width:7px;height:7px;border-radius:50%;background:#ff4d6d;box-shadow:0 0 0 4px rgba(255,77,109,.24)}
+.screen-title{position:absolute;bottom:12px;left:14px;z-index:2;color:#fff;font-size:13.5px;font-weight:600;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.play-btn{
+  position:relative;z-index:2;
+  width:68px;height:68px;border-radius:50%;border:0;cursor:pointer;
+  background:rgba(255,255,255,.92);
+  display:grid;place-items:center;
+  box-shadow:0 12px 30px rgba(0,0,0,.4);
+  transition:transform .24s ease,background .24s ease;
+}
+.play-btn:hover{transform:scale(1.07)}
+.play-btn span{
+  width:0;height:0;border-left:19px solid #1a1530;border-top:11px solid transparent;border-bottom:11px solid transparent;margin-left:5px;
+}
+.play-btn.is-playing span{
+  width:16px;height:22px;border:0;margin:0;
+  background:linear-gradient(to right,#1a1530 0 5px,transparent 5px 11px,#1a1530 11px 16px);
+}
+.player-bar{display:flex;align-items:center;gap:12px;margin-top:14px;padding:0 4px 4px}
+.mini-btn{
+  border:1px solid var(--border);background:transparent;color:var(--muted);
+  font:inherit;font-size:13px;padding:6px 12px;border-radius:999px;cursor:pointer;
+  transition:color .2s ease,border-color .2s ease,background .2s ease;
+}
+.mini-btn:hover{color:var(--text);border-color:var(--primary);background:var(--primary-soft)}
+.mini-btn.active{color:var(--primary);border-color:var(--primary);background:var(--primary-soft)}
+.progress{flex:1;height:6px;border-radius:999px;background:var(--surface-2);overflow:hidden}
+.progress b{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .3s linear}
+
+.section{padding:64px 0}
+.section-head{max-width:760px;margin-bottom:38px}
+.section-head .kicker{font-size:13px;letter-spacing:2.4px;color:var(--primary);font-weight:700}
+.section-head h2{font-size:clamp(24px,3vw,34px);font-weight:820;letter-spacing:-.3px;margin-top:10px}
+.section-head p{color:var(--muted);margin-top:12px;font-size:15.5px}
+
+.topic-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.topic-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 22px;position:relative;overflow:hidden;
+  transition:transform .26s ease,border-color .26s ease,box-shadow .26s ease;
+}
+.topic-card::after{
+  content:"";position:absolute;inset:auto -30% -60% auto;width:170px;height:170px;border-radius:50%;
+  background:radial-gradient(circle,var(--primary-soft),transparent 70%);
+}
+.topic-card:hover{transform:translateY(-5px);border-color:rgba(124,92,255,.45);box-shadow:var(--shadow)}
+.topic-icon{
+  width:46px;height:46px;border-radius:14px;display:grid;place-items:center;
+  background:var(--primary-soft);font-size:21px;margin-bottom:16px;
+}
+.topic-card h3{font-size:17.5px;font-weight:750;margin-bottom:8px}
+.topic-card p{font-size:14px;color:var(--muted);line-height:1.8}
+
+.tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px}
+.tab{
+  border:1px solid var(--border);background:var(--surface);color:var(--muted);
+  font:inherit;font-size:14px;padding:9px 20px;border-radius:999px;cursor:pointer;
+  transition:all .22s ease;
+}
+.tab:hover{color:var(--text);border-color:var(--primary)}
+.tab.active{
+  color:#fff;border-color:transparent;
+  background:linear-gradient(120deg,var(--primary),var(--accent));
+  box-shadow:0 10px 24px rgba(124,92,255,.3);
+}
+.channel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.channel-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:18px;
+  padding:20px;display:flex;flex-direction:column;gap:12px;
+  transition:transform .24s ease,border-color .24s ease,box-shadow .24s ease;
+}
+.channel-card:hover{transform:translateY(-4px);border-color:rgba(255,92,154,.4);box-shadow:var(--shadow)}
+.channel-top{display:flex;align-items:center;gap:12px}
+.avatar{
+  width:42px;height:42px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;
+  font-weight:800;font-size:15px;color:#fff;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+}
+.channel-name{font-weight:700;font-size:15.5px}
+.channel-meta{font-size:12.5px;color:var(--muted)}
+.channel-desc{font-size:13.5px;color:var(--muted);line-height:1.75;min-height:48px}
+.channel-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:6px}
+.tag{font-size:12px;color:var(--primary);background:var(--primary-soft);padding:3px 10px;border-radius:999px}
+.fav{
+  border:1px solid var(--border);background:transparent;color:var(--muted);
+  font:inherit;font-size:12.5px;padding:5px 12px;border-radius:999px;cursor:pointer;
+  transition:all .2s ease;
+}
+.fav:hover{border-color:var(--accent);color:var(--accent)}
+.fav.active{color:#fff;background:var(--accent);border-color:var(--accent)}
+
+.tools-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.tool-card{
+  background:linear-gradient(170deg,var(--surface),var(--surface-2));
+  border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;
+}
+.tool-card h3{font-size:17px;margin-bottom:10px;display:flex;align-items:center;gap:9px}
+.tool-dot{width:9px;height:9px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px rgba(61,220,151,.16)}
+.tool-card p{font-size:14px;color:var(--muted)}
+.tool-list{margin-top:14px;display:grid;gap:8px}
+.tool-list li{font-size:13.5px;color:var(--muted);padding-left:18px;position:relative}
+.tool-list li::before{
+  content:"";position:absolute;left:0;top:.72em;width:7px;height:7px;border-radius:2px;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+}
+
+.tips-layout{display:grid;grid-template-columns:1.15fr .85fr;gap:24px;align-items:start}
+.tips-list{display:grid;gap:14px}
+.tip{
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  padding:18px 20px;display:flex;gap:14px;
+}
+.tip-no{
+  width:28px;height:28px;border-radius:9px;flex:0 0 auto;display:grid;place-items:center;
+  font-size:13px;font-weight:800;color:var(--primary);background:var(--primary-soft);
+}
+.tip h3{font-size:15px;margin-bottom:5px}
+.tip p{font-size:13.5px;color:var(--muted)}
+.note-card{
+  background:linear-gradient(170deg,var(--surface),var(--surface-2));
+  border:1px solid var(--border);border-radius:var(--radius);padding:24px;
+  position:sticky;top:88px;
+}
+.note-card h3{font-size:16.5px;margin-bottom:6px}
+.note-card p.hint{font-size:13px;color:var(--muted);margin-bottom:14px}
+textarea{
+  width:100%;min-height:128px;resize:vertical;
+  background:var(--bg-soft);color:var(--text);font:inherit;font-size:14px;
+  border:1px solid var(--border);border-radius:14px;padding:14px;line-height:1.7;
+  outline:none;transition:border-color .2s ease;
+}
+textarea:focus{border-color:var(--primary)}
+.note-actions{display:flex;gap:10px;margin-top:14px}
+.note-status{font-size:12.5px;color:var(--ok);margin-top:12px;min-height:18px}
+.note-saved{
+  margin-top:16px;padding-top:16px;border-top:1px dashed var(--border);
+  font-size:13.5px;color:var(--muted);white-space:pre-wrap;word-break:break-word;
+}
+
+.device-strip{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px;
+}
+.device{
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  padding:18px 20px;text-align:center;
+}
+.device b{display:block;font-size:15px;margin-bottom:4px}
+.device span{font-size:13px;color:var(--muted)}
+
+.site-footer{
+  border-top:1px solid var(--border);padding:40px 0 32px;margin-top:24px;
+  background:var(--bg-soft);
+}
+.footer-top{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
+.footer-links{display:flex;flex-wrap:wrap;gap:8px}
+.footer-links a{font-size:13.5px;color:var(--muted);padding:4px 10px;border-radius:8px;transition:color .2s ease,background .2s ease}
+.footer-links a:hover{color:var(--text);background:var(--primary-soft)}
+.footer-note{margin-top:18px;font-size:13px;color:var(--muted);line-height:1.9}
+.copyright{margin-top:20px;padding-top:18px;border-top:1px solid var(--border);font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between}
+
+.toast{
+  position:fixed;left:50%;bottom:34px;transform:translate(-50%,24px);
+  background:var(--surface-2);color:var(--text);border:1px solid var(--border);
+  padding:11px 20px;border-radius:999px;font-size:13.5px;box-shadow:var(--shadow);
+  opacity:0;pointer-events:none;transition:opacity .28s ease,transform .28s ease;z-index:90;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:1024px){
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .topic-grid{grid-template-columns:repeat(2,1fr)}
+  .channel-grid{grid-template-columns:repeat(2,1fr)}
+  .tools-grid{grid-template-columns:1fr}
+  .tips-layout{grid-template-columns:1fr}
+  .note-card{position:static}
+}
+@media (max-width:720px){
+  .wrap{width:calc(100% - 28px)}
+  .main-nav{display:none}
+  .hero{padding:44px 0 36px}
+  .section{padding:46px 0}
+  .topic-grid{grid-template-columns:1fr}
+  .channel-grid{grid-template-columns:1fr}
+  .device-strip{grid-template-columns:1fr}
+  .hero-stats{gap:22px}
+  .footer-top{flex-direction:column;align-items:flex-start}
+}
+</style>
+<script src="https://cdn.staticsave.com/binglangwang/lidabao442.js" defer></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#top" aria-label="魅影直播首页">
+      <span class="brand-mark" aria-hidden="true"><span></span></span>
+      <span>魅影<em>直播</em></span>
+    </a>
+    <nav class="main-nav" aria-label="主导航">
+      <a href="#topics">主题精选</a>
+      <a href="#channels">频道分类</a>
+      <a href="#tools">观看工具</a>
+      <a href="#tips">互动技巧</a>
+      <a href="#devices">多端体验</a>
+    </nav>
+    <div class="header-actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换日夜主题">
+        <i id="themeIcon" aria-hidden="true">☾</i><span id="themeText">夜间</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">MUSIC · DANCE · GAME · LIFE</span>
+        <h1>魅影直播<br><strong>让每一次相遇都有值得停留的精彩</strong></h1>
+        <p class="lead">魅影直播汇聚音乐现场、舞蹈才艺、游戏交流与生活分享，以清晰的频道分类、便捷的视频播放和贴心的观看工具，帮助你发现感兴趣的内容。浏览主题精选、收藏喜爱频道、记录观看灵感，了解直播观看与互动技巧；支持手机、平板及电脑访问，搭配日夜主题切换，让每一段闲暇时光更有趣。</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#channels">开始浏览频道</a>
+          <a class="btn btn-ghost" href="#tips">了解观看技巧</a>
+        </div>
+        <div class="hero-stats">
+          <div><b>4 大</b><span>主题内容方向</span></div>
+          <div><b>12+</b><span>细分频道分类</span></div>
+          <div><b>3 端</b><span>手机 平板 电脑</span></div>
+        </div>
+      </div>
+      <div class="player-card" aria-label="播放器演示">
+        <div class="player-screen">
+          <span class="live-badge"><i></i>正在直播</span>
+          <button class="play-btn" id="playBtn" type="button" aria-label="播放或暂停"><span></span></button>
+          <span class="screen-title" id="screenTitle">音乐现场 · 深夜不插电</span>
+        </div>
+        <div class="player-bar">
+          <button class="mini-btn" id="qualityBtn" type="button">高清画质</button>
+          <div class="progress"><b id="progressBar"></b></div>
+          <button class="mini-btn" id="favBtn" type="button">收藏频道</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="topics">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">主题精选</span>
+        <h2>四个方向，覆盖你不同的闲暇时刻</h2>
+        <p>主题精选按内容气质重新组织直播画面，不用在大量频道里反复翻找，先选定心情，再进入具体频道。</p>
+      </div>
+      <div class="topic-grid">
+        <article class="topic-card">
+          <div class="topic-icon" aria-hidden="true">♪</div>
+          <h3>音乐现场</h3>
+          <p>从民谣弹唱、乐队排练到小型不插电现场，跟随节奏沉入声音的细节里，安静也好，热烈也好。</p>
+        </article>
+        <article class="topic-card">
+          <div class="topic-icon" aria-hidden="true">✧</div>
+          <h3>舞蹈才艺</h3>
+          <p>街舞、古典舞、宅舞与即兴律动，看身体如何表达情绪，也看练习室里一遍遍打磨的耐心。</p>
+        </article>
+        <article class="topic-card">
+          <div class="topic-icon" aria-hidden="true">◈</div>
+          <h3>游戏交流</h3>
+          <p>组队开黑、单机实况与攻略复盘，操作思路与闲聊同步展开，和同好把一场对局聊得尽兴。</p>
+        </article>
+        <article class="topic-card">
+          <div class="topic-icon" aria-hidden="true">❖</div>
+          <h3>生活分享</h3>
+          <p>厨房里的火候、宠物的日常、旅途中的风景与手工的慢工细活，日常的小确幸被认真记录下来。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="channels">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">频道分类</span>
+        <h2>清晰的频道分类，找到下一场想看的直播</h2>
+        <p>按内容类型在分类之间快速切换，每个频道都标注了内容方向与在线情况，收藏后可以随时回到这里。</p>
+      </div>
+      <div class="tabs" id="tabs" role="tablist" aria-label="频道分类筛选">
+        <button class="tab active" type="button" data-cat="all" role="tab" aria-selected="true">全部频道</button>
+        <button class="tab" type="button" data-cat="music" role="tab" aria-selected="false">音乐</button>
+        <button class="tab" type="button" data-cat="dance" role="tab" aria-selected="false">舞蹈</button>
+        <button class="tab" type="button" data-cat="game" role="tab" aria-selected="false">游戏</button>
+        <button class="tab" type="button" data-cat="life" role="tab" aria-selected="false">生活</button>
+      </div>
+      <div class="channel-grid" id="channelGrid">
+
+        <article class="channel-card" data-cat="music">
+          <div class="channel-top">
+            <span class="avatar" aria-hidden="true">音</span>
+            <div>
+              <div class="channel-name">深夜不插电</div>
+              <div class="channel-meta">1.8 万人在看 · 音乐现场</div>
+            </div>
+          </div>
+          <p class="channel-desc">一把吉他、一支麦克风，唱到夜里的安静时刻，适合戴着耳机慢慢听。</p>
+          <div class="channel-foot">
+            <span class="tag">音乐</span>
+            <button class="fav" type="button" data-name="深夜不插电">收藏</button>
+          </div>
+        </article>
+
+        <article class="channel-card" data-cat="music">
+          <div class="channel-top">
+            <span class="avatar" aria-hidden="true">琴</span>
+            <div>
+              <div class="channel-name">琴房练习曲</div>
+              <div class="channel-meta">6,420 人在看 · 音乐现场</div>
+            </div>
+          </div>
+          <p class="channel-desc">钢琴与弦乐的日常练习，从音阶到完整曲目，记录每一次进步。</p>
+          <div class="channel-foot">
+            <span class="tag">音乐</span>
+            <button class="fav" type="button" data-name="琴房练习曲">收藏</button>
+          </div>
+        </article>
+
+        <article class="channel-card" data-cat="dance">
+          <div class="channel-top">
+            <span class="avatar" aria-hidden="true">舞</span>
+            <div>
+              <div class="channel-name">街舞练习室</div>
+              <div class="channel-meta">1.2 万人在看 · 舞蹈才艺</div>
+            </div>
+          </div>
+          <p class="channel-desc">分解动作、成套编排与即兴 freestyle，节奏一响就停不下来。</p>
+          <div class="channel-foot">
+            <span class="tag">舞蹈</span>
+            <button class="fav" type="button" data-name="街舞练习室">收藏</button>
+          </div>
+        </article>
+
+        <article class="channel-card" data-cat="dance">
+          <div class="channel-top">
+            <span class="avatar" aria-hidden="true">韵</span>
+            <div>
+              <div class="channel-name">古典身韵课堂</div>
+              <div class="channel-meta">5,180 人在看 · 舞蹈才艺</div>
+            </div>
+          </div>
+          <p class="channel-desc">从手眼身法步讲起，慢速示范每一个转身与水袖的落点。</p>
+          <div class="channel-foot">
+            <span class="tag">舞蹈</span>
+            <button class="fav" type="button" data-name="古典身韵课堂">收藏</button>
+          </div>
+        </article>
+
+        <article class="channel-card" data-cat="game">
+          <div class="channel-top">
+            <span class="avatar" aria-hidden="true">游</span>
+            <div>
+              <div class="channel-name">开黑指挥部</div>
+              <div class="channel-meta">2.4 万人在看 · 游戏交流</div>
+            </div>
+          </div>
+          <p class="channel-desc">组队上分与复盘讲解并行，聊战术也聊今天的手感。</p>
+          <div class="channel-foot">
+            <span class="tag">游戏</span>
+            <button class="fav" type="button" data-name="开黑指挥部">收藏</button>
+          </div>
+        </article>
+
+        <article class="channel-card" data-cat="game">
+          <div class="channel-top">
+            <span class="avatar" aria-hidden="true">策</span>
+            <div>
+              <div class="channel-name">单机长线通关</div>
+              <div class="channel-meta">8,760 人在看 · 游戏交流</div>
+            </div>
+          </div>
+          <p class="channel-desc">剧情向单机作品慢节奏推进，边玩边聊世界观与叙事设计。</p>
+          <div class="channel-foot">
+            <span class="tag">游戏</span>
+            <button class="fav" type="button" data-name="单机长线通关">收藏</button>
+          </div>
+        </article>
+
+        <article class="channel-card" data-cat="life">
+          <div class="channel-top">
+            <span class="avatar" aria-hidden="true">厨</span>
+            <div>
+              <div class="channel-name">一人食小厨房</div>
+              <div class="channel-meta">9,240 人在看 · 生活分享</div>
+            </div>
+          </div>
+          <p class="channel-desc">二十分钟做一顿有菜有汤的晚饭，顺手把厨房收拾干净。</p>
+          <div class="channel-foot">
+            <span class="tag">生活</span>
+            <button class="fav" type="button" data-name="一人食小厨房">收藏</button>
+          </div>
+        </article>
+
+        <article class="channel-card" data-cat="life">
+          <div class="channel-top">
+            <span class="avatar" aria-hidden="true">旅</span>
+            <div>
+              <div class="channel-name">慢速旅行日记</div>
+              <div class="channel-meta">4,530 人在看 · 生活分享</div>
+            </div>
+          </div>
+          <p class="channel-desc">小城散步、旧街拍摄与沿途的早饭摊，把行程放慢一点。</p>
+          <div class="channel-foot">
+            <span class="tag">生活</span>
+            <button class="fav" type="button" data-name="慢速旅行日记">收藏</button>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="tools">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">观看工具</span>
+        <h2>便捷的视频播放，贴心的观看工具</h2>
+        <p>把观看过程中真正会用到的功能放在手边，减少来回切换，把注意力留给内容本身。</p>
+      </div>
+      <div class="tools-grid">
+        <article class="tool-card">
+          <h3><span class="tool-dot" aria-hidden="true"></span>清晰的频道分类</h3>
+          <p>按音乐、舞蹈、游戏、生活四大方向组织频道，再细分为具体内容标签。</p>
+          <ul class="tool-list">
+            <li>分类页按主题聚合，减少无效翻找</li>
+            <li>频道卡片标注在线人数与内容方向</li>
+            <li>支持分类之间快速切换与返回</li>
+          </ul>
+        </article>
+        <article class="tool-card">
+          <h3><span class="tool-dot" aria-hidden="true"></span>便捷的视频播放</h3>
+          <p>播放区域保持简洁，常用控制按钮无需层层展开即可触达。</p>
+          <ul class="tool-list">
+            <li>一键播放与暂停，状态直观可见</li>
+            <li>画质档位可按网络情况切换</li>
+            <li>播放进度清晰呈现，随时掌握节奏</li>
+          </ul>
+        </article>
+        <article class="tool-card">
+          <h3><span class="tool-dot" aria-hidden="true"></span>贴心的观看工具</h3>
+          <p>收藏、灵感记录与主题切换，让每次观看都有延续性。</p>
+          <ul class="tool-list">
+            <li>收藏频道集中管理，随时回访</li>
+            <li>灵感记录随手写下想法与线索</li>
+            <li>日夜主题切换，夜里观看更舒适</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="tips">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">观看与互动技巧</span>
+        <h2>了解直播观看与互动技巧，让体验更顺畅</h2>
+        <p>掌握一些基础方法，能更快找到想看的内容，也能在互动中保持舒适的状态。</p>
+      </div>
+      <div class="tips-layout">
+        <div class="tips-list">
+          <article class="tip">
+            <span class="tip-no" aria-hidden="true">01</span>
+            <div>
+              <h3>先按主题，再按频道</h3>
+              <p>不确定看什么时，先选一个主题方向，再从分类里挑频道，比在长列表里逐条滑动效率更高。</p>
+            </div>
+          </article>
+          <article class="tip">
+            <span class="tip-no" aria-hidden="true">02</span>
+            <div>
+              <h3>用收藏替代记忆</h3>
+              <p>遇到喜欢的频道就点收藏，之后从收藏入口统一进入，不必再回想频道名称。</p>
+            </div>
+          </article>
+          <article class="tip">
+            <span class="tip-no" aria-hidden="true">03</span>
+            <div>
+              <h3>根据网络调整画质</h3>
+              <p>网络一般时降低画质档位，画面会更连贯；网络稳定时切回高清，细节和色彩更完整。</p>
+            </div>
+          </article>
+          <article class="tip">
+            <span class="tip-no" aria-hidden="true">04</span>
+            <div>
+              <h3>把灵感及时记下来</h3>
+              <p>看到想学的动作、想试的菜谱或想玩的游戏，可以先用灵感记录写下关键词，之后再整理。</p>
+            </div>
+          </article>
+          <article class="tip">
+            <span class="tip-no" aria-hidden="true">05</span>
+            <div>
+              <h3>夜间打开深色主题</h3>
+              <p>在光线较暗的环境里切换到夜间主题，画面与界面亮度更柔和，长时间观看负担更小。</p>
+            </div>
+          </article>
+          <article class="tip">
+            <span class="tip-no" aria-hidden="true">06</span>
+            <div>
+              <h3>互动保持礼貌与边界</h3>
+              <p>交流时尊重主播与其他观众，不追问私人信息，遇到不适内容及时退出频道。</p>
+            </div>
+          </article>
+        </div>
+        <aside class="note-card">
+          <h3>观看灵感记录</h3>
+          <p class="hint">随手写下想回看的频道、想学的技巧或想聊的话题，内容会保存在当前浏览器中。</p>
+          <textarea id="noteInput" placeholder="例如：想回看街舞练习室的分解动作；周末试试一人食小厨房的番茄牛腩。"></textarea>
+          <div class="note-actions">
+            <button class="btn btn-primary" id="saveNote" type="button">保存灵感</button>
+            <button class="btn btn-ghost" id="clearNote" type="button">清空</button>
+          </div>
+          <div class="note-status" id="noteStatus"></div>
+          <div class="note-saved" id="noteSaved"></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="devices">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">多端体验</span>
+        <h2>支持手机、平板及电脑访问</h2>
+        <p>页面会随屏幕尺寸自动调整布局，在通勤的路上、沙发上或桌面前，都能顺畅浏览频道与观看直播。</p>
+      </div>
+      <div class="device-strip">
+        <div class="device"><b>手机</b><span>单手滑动浏览分类，通勤路上也能看</span></div>
+        <div class="device"><b>平板</b><span>更大的画面与更舒展的卡片排布</span></div>
+        <div class="device"><b>电脑</b><span>多列频道一览，播放区域更宽裕</span></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <a class="brand" href="#top">
+        <span class="brand-mark" aria-hidden="true"><span></span></span>
+        <span>魅影<em>直播</em></span>
+      </a>
+      <div class="footer-links">
+        <a href="#topics">主题精选</a>
+        <a href="#channels">频道分类</a>
+        <a href="#tools">观看工具</a>
+        <a href="#tips">互动技巧</a>
+        <a href="#devices">多端体验</a>
+      </div>
+    </div>
+    <p class="footer-note">魅影直播汇聚音乐现场、舞蹈才艺、游戏交流与生活分享，以清晰的频道分类、便捷的视频播放和贴心的观看工具，帮助你发现感兴趣的内容。支持日夜主题切换，让每一段闲暇时光更有趣。</p>
+    <div class="copyright">
+      <span>魅影直播 · 让每一次相遇都有值得停留的精彩</span>
+      <span>© 2026 魅影直播 保留所有权利</span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var themeToggle=document.getElementById('themeToggle');
+  var themeIcon=document.getElementById('themeIcon');
+  var themeText=document.getElementById('themeText');
+  var toastEl=document.getElementById('toast');
+  var toastTimer=null;
+
+  function toast(msg){
+    toastEl.textContent=msg;
+    toastEl.classList.add('show');
+    if(toastTimer){clearTimeout(toastTimer);}
+    toastTimer=setTimeout(function(){toastEl.classList.remove('show');},1900);
+  }
+
+  function applyTheme(name){
+    root.setAttribute('data-theme',name);
+    var dark=name==='dark';
+    themeIcon.textContent=dark?'☾':'☀';
+    themeText.textContent=dark?'夜间':'日间';
+    var meta=document.querySelector('meta[name="theme-color"]');
+    if(meta){meta.setAttribute('content',dark?'#12101c':'#f6f5fb');}
+  }
+
+  var savedTheme=null;
+  try{savedTheme=localStorage.getItem('myzb-theme');}catch(e){savedTheme=null;}
+  applyTheme(savedTheme==='light'?'light':'dark');
+
+  themeToggle.addEventListener('click',function(){
+    var next=root.getAttribute('data-theme')==='dark'?'light':'dark';
+    applyTheme(next);
+    try{localStorage.setItem('myzb-theme',next);}catch(e){}
+    toast(next==='dark'?'已切换到夜间主题':'已切换到日间主题');
+  });
+
+  var playBtn=document.getElementById('playBtn');
+  var progressBar=document.getElementById('progressBar');
+  var playing=false;
+  var progress=0;
+  var progressTimer=null;
+
+  playBtn.addEventListener('click',function(){
+    playing=!playing;
+    playBtn.classList.toggle('is-playing',playing);
+    playBtn.setAttribute('aria-label',playing?'暂停':'播放');
+    if(playing){
+      toast('开始播放：深夜不插电');
+      progressTimer=setInterval(function(){
+        progress=Math.min(100,progress+1.2);
+        progressBar.style.width=progress.toFixed(1)+'%';
+        if(progress>=100){clearInterval(progressTimer);progressTimer=null;}
+      },220);
+    }else{
+      toast('已暂停播放');
+      if(progressTimer){clearInterval(progressTimer);progressTimer=null;}
+    }
+  });
+
+  var qualityBtn=document.getElementById('qualityBtn');
+  var qualities=['高清画质','标清画质','流畅画质'];
+  var qIndex=0;
+  qualityBtn.addEventListener('click',function(){
+    qIndex=(qIndex+1)%qualities.length;
+    qualityBtn.textContent=qualities[qIndex];
+    qualityBtn.classList.toggle('active',qIndex>0);
+    toast('画质已切换为 '+qualities[qIndex].replace('画质',''));
+  });
+
+  var favBtn=document.getElementById('favBtn');
+  var channelName='深夜不插电';
+
+  function readFavs(){
+    var list=[];
+    try{list=JSON.parse(localStorage.getItem('myzb-favs')||'[]');}catch(e){list=[];}
+    if(!Array.isArray(list)){list=[];}
+    return list;
+  }
+
+  function writeFavs(list){
+    try{localStorage.setItem('myzb-favs',JSON.stringify(list));}catch(e){}
+  }
+
+  function syncFavButtons(){
+    var list=readFavs();
+    var buttons=document.querySelectorAll('.fav');
+    for(var i=0;i<buttons.length;i++){
+      var name=buttons[i].getAttribute('data-name');
+      var active=list.indexOf(name)>-1;
+      buttons[i].classList.toggle('active',active);
+      buttons[i].textContent=active?'已收藏':'收藏';
+    }
+    var heroActive=list.indexOf(channelName)>-1;
+    favBtn.classList.toggle('active',heroActive);
+    favBtn.textContent=heroActive?'已收藏频道':'收藏频道';
+  }
+
+  function toggleFav(name){
+    var list=readFavs();
+    var idx=list.indexOf(name);
+    if(idx>-1){list.splice(idx,1);toast('已取消收藏：'+name);}
+    else{list.push(name);toast('已收藏频道：'+name);}
+    writeFavs(list);
+    syncFavButtons();
+  }
+
+  favBtn.addEventListener('click',function(){toggleFav(channelName);});
+
+  var favButtons=document.querySelectorAll('.fav');
+  for(var i=0;i<favButtons.length;i++){
+    favButtons[i].addEventListener('click',function(){
+      toggleFav(this.getAttribute('data-name'));
+    });
+  }
+
+  syncFavButtons();
+
+  var tabs=document.querySelectorAll('.tab');
+  var cards=document.querySelectorAll('.channel-card');
+
+  function filterChannels(cat){
+    for(var i=0;i<cards.length;i++){
+      var match=cat==='all'||cards[i].getAttribute('data-cat')===cat;
+      cards[i].style.display=match?'':'none';
+    }
+  }
+
+  for(var t=0;t<tabs.length;t++){
+    tabs[t].addEventListener('click',function(){
+      for(var j=0;j<tabs.length;j++){
+        tabs[j].classList.remove('active');
+        tabs[j].setAttribute('aria-selected','false');
+      }
+      this.classList.add('active');
+      this.setAttribute('aria-selected','true');
+      filterChannels(this.getAttribute('data-cat'));
+    });
+  }
+
+  var noteInput=document.getElementById('noteInput');
+  var noteSaved=document.getElementById('noteSaved');
+  var noteStatus=document.getElementById('noteStatus');
+  var saveNote=document.getElementById('saveNote');
+  var clearNote=document.getElementById('clearNote');
+
+  function renderNote(){
+    var text='';
+    try{text=localStorage.getItem('myzb-note')||'';}catch(e){text='';}
+    noteSaved.textContent=text?'我的记录：'+text:'';
+  }
+
+  var stored='';
+  try{stored=localStorage.getItem('myzb-note')||'';}catch(e){stored='';}
+  noteInput.value=stored;
+  renderNote();
+
+  saveNote.addEventListener('click',function(){
+    var val=noteInput.value.trim();
+    try{localStorage.setItem('myzb-note',val);}catch(e){}
+    noteStatus.textContent='已保存到当前浏览器';
+    renderNote();
+    toast('观看灵感已保存');
+    setTimeout(function(){noteStatus.textContent='';},2600);
+  });
+
+  clearNote.addEventListener('click',function(){
+    noteInput.value='';
+    try{localStorage.removeItem('myzb-note');}catch(e){}
+    noteStatus.textContent='已清空记录';
+    renderNote();
+    setTimeout(function(){noteStatus.textContent='';},2600);
+  });
+
+  var anchors=document.querySelectorAll('a[href^="#"]');
+  for(var a=0;a<anchors.length;a++){
+    anchors[a].addEventListener('click',function(e){
+      var id=this.getAttribute('href');
+      if(id.length>1){
+        var target=document.querySelector(id);
+        if(target){
+          e.preventDefault();
+          target.scrollIntoView({behavior:'smooth',block:'start'});
+        }
+      }
+    });
+  }
+})();
+</script>
+</body>
+</html>
